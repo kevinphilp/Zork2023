@@ -5,6 +5,8 @@
 #include "kputils.h"
 #include "banned.h"
 
+// Add some junk
+
 struct node_t {
     int id;
     void* data;
