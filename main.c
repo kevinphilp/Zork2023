@@ -1,4 +1,4 @@
-/*! Main file for Bag, editing master **/
+/*! Main file for Bag, editing master, testing magit **/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
