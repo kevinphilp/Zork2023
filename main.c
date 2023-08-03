@@ -1,4 +1,4 @@
-/*! Main file for Bag **/
+/*! Main file for Bag, editing master **/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
