@@ -6,7 +6,9 @@
 #include "kputils.h"
 #include "banned.h"
 
-/*! \page mainpage Introduction */
+/*! \page mainpage Introduction
+Added to test git
+ */
 
 /*! struct node_t */
 struct node_t {
