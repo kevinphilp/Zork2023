@@ -1,3 +1,4 @@
+/*! Main file for Bag **/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -5,8 +6,9 @@
 #include "kputils.h"
 #include "banned.h"
 
-// Add some junk
+/*! \page mainpage Introduction */
 
+/*! struct node_t */
 struct node_t {
     int id;
     void* data;
@@ -62,10 +64,20 @@ int main() {
 
     printf("Final size -- %d\n", int_list->size);
     delete_list(int_list);
-    return 0;
 }
 
-struct list_t* create_list() {
+/*! Function definition:
+  @brief      Function to create a new double linked list.
+  @details    List is created empty with NULL links to head and tail.
+  The size counter is set to zero.
+  @note       Optionally add a note too.
+  @param[in]  void
+  @return     List pointer
+  - type struct *list_t
+             - Some text
+*/
+
+struct list_t* create_list(void) {
     struct list_t *new_list = NULL;
     new_list = malloc(sizeof(struct list_t));
     if (!new_list) {

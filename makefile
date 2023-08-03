@@ -40,7 +40,7 @@ tcc: $(CMAIN) $(COBJS)
 %.o: %.c
 	$(TCC) $(CFLAGS) $(CXFLAGS) -c  $^
 
-libs: $(CLIBS)
+tcclibs: $(CLIBS)
 	$(TCC) $(CFLAGS) $(CXFLAGS) -c $^
 
 
