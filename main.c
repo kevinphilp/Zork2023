@@ -1,4 +1,4 @@
-/*! Main file for Bag, should go **/
+/*! Main file for Bag, newleaf **/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
