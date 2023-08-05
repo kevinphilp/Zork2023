@@ -12,7 +12,7 @@ enum type_e {ITEM, LOCATION, PERSON};
 enum object_e {HERO=0, GRUMIO, WOODENBOX, REDBALL, KNIFE, HELPNOTE, ROPE, END_OBJ};
 
 struct object_s {
-    int id;
+    enum object_e id;
     char noun[12], adjective[12], unique_name[24], description[256];
     struct list_t *bag;
     enum type_e is_a;
@@ -42,8 +42,10 @@ int main(void) {
     for (enum object_e counter=HERO; counter<=END_OBJ; counter++) {
         objects[counter].bag = create_list();
     }
+    
 
-    // HERO
+    // HERO 0
+    objects[HERO].id = HERO;
     strlcpy(objects[HERO].noun, "me", 12); 
     strlcpy(objects[HERO].adjective, "brave", 12); 
     strlcpy(objects[HERO].unique_name, "hero", 12);
@@ -52,16 +54,8 @@ int main(void) {
     objects[HERO].person.can_carry = true;
     strlcpy(objects[HERO].person.name, "Freddy", 12);
 
-    // HERO
-    strlcpy(objects[HERO].noun, "me", 12); 
-    strlcpy(objects[HERO].adjective, "brave", 12); 
-    strlcpy(objects[HERO].unique_name, "hero", 12);
-    strlcpy(objects[HERO].description, "A brave young man.", 12); 
-    objects[HERO].is_a = PERSON;
-    objects[HERO].person.can_carry = true;
-    strlcpy(objects[HERO].person.name, "Freddy", 12);
-
-    // GRUMIO
+    // GRUMIO 1
+    objects[GRUMIO].id = GRUMIO;
     strlcpy(objects[GRUMIO].noun, "grumio", 12); 
     strlcpy(objects[GRUMIO].adjective, "grumpy", 12); 
     strlcpy(objects[GRUMIO].unique_name, "grumio", 12);
@@ -70,7 +64,8 @@ int main(void) {
     objects[GRUMIO].person.can_carry = true;
     strlcpy(objects[GRUMIO].person.name, "Grumio", 12);
 
-    // WOODENBOX
+    // WOODENBOX 2
+    objects[WOODENBOX].id = WOODENBOX;
     strlcpy(objects[WOODENBOX].noun, "box", 12); 
     strlcpy(objects[WOODENBOX].adjective, "wooden", 12); 
     strlcpy(objects[WOODENBOX].unique_name, "woodenbox", 12);
@@ -79,7 +74,8 @@ int main(void) {
     objects[WOODENBOX].item.weight = 5;
     objects[WOODENBOX].item.capacity = 25;
 
-    // REDBALL
+    // REDBALL 3
+    objects[REDBALL].id = REDBALL;
     strlcpy(objects[REDBALL].noun, "ball", 12); 
     strlcpy(objects[REDBALL].adjective, "red", 12); 
     strlcpy(objects[REDBALL].unique_name, "redball", 12);
@@ -88,7 +84,8 @@ int main(void) {
     objects[REDBALL].item.weight = 2;
     objects[REDBALL].item.capacity = 0;
 
-    // KNIFE
+    // KNIFE 4
+    objects[KNIFE].id = KNIFE;
     strlcpy(objects[KNIFE].noun, "knife", 12); 
     strlcpy(objects[KNIFE].adjective, "sharp", 12); 
     strlcpy(objects[KNIFE].unique_name, "knife", 12);
@@ -97,7 +94,8 @@ int main(void) {
     objects[KNIFE].item.weight = 2;
     objects[KNIFE].item.capacity = 0;
 
-    // HELPNOTE
+    // HELPNOTE 5
+    objects[HELPNOTE].id = HELPNOTE;
     strlcpy(objects[HELPNOTE].noun, "note", 12); 
     strlcpy(objects[HELPNOTE].adjective, "help", 12); 
     strlcpy(objects[HELPNOTE].unique_name, "helpnote", 12);
@@ -106,7 +104,8 @@ int main(void) {
     objects[HELPNOTE].item.weight = 1;
     objects[HELPNOTE].item.capacity = 0;
 
-    // ROPE
+    // ROPE 6
+    objects[ROPE].id = ROPE;
     strlcpy(objects[ROPE].noun, "rope", 12); 
     strlcpy(objects[ROPE].adjective, "long", 12); 
     strlcpy(objects[ROPE].unique_name, "rope", 12);
@@ -121,14 +120,54 @@ int main(void) {
     struct node_t *iter = objects[HERO].bag->head;
     printf("You have the following items: ");
     while (iter != NULL) {
-        printf("%s, ", (char*)((struct object_s*)(iter->data))->noun);
-        iter = iter->next;
-        
+        printf(" %s,", (char*)((struct object_s*)(iter->data))->unique_name);
+        iter = iter->next;       
     }
+    puts("");
+
+    iter = objects[HERO].bag->head;
+    printf("Pass rope to Grumio:\n");
+    while (iter != NULL) {
+        if ( strcicmp(
+                 (char*)((struct object_s*)(iter->data))->unique_name,
+                 "rope") == 0 ) {
+            int id = (int)((struct object_s*)(iter->data))->id;
+            printf("\n - %d - ", id);
+            remove_by_id(objects[HERO].bag, id);
+            push_head(objects[GRUMIO].bag , (void*)&objects[id]);
+            break;
+        } else {
+            iter = iter->next;
+        };
+    };
+
+    iter = objects[HERO].bag->head;
+    printf("You have the following items:\n");
+    while (iter != NULL) {
+        printf(" %s,", (char*)((struct object_s*)(iter->data))->unique_name);
+        iter = iter->next;       
+    }
+    puts("");
+
+    iter = objects[GRUMIO].bag->head;
+    printf("Grumio has the following items:\n");
+    while (iter != NULL) {
+        printf(" %s,", (char*)((struct object_s*)(iter->data))->unique_name);
+        iter = iter->next;       
+    }
+    puts("");
+
+
+
+    
     
     for (enum object_e counter=HERO; counter<=END_OBJ; counter++) {
         delete_list(objects[counter].bag);
-    }   
+    }
+
+
+
+    
     if (objects != NULL) {
         free(objects);
         objects = NULL;
