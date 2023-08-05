@@ -15,7 +15,7 @@ void hello(void) {
 	printf("\n--- %s ---\n", "Hello");
 }
 
-size_t strlcpy(char* dst, const char* src, size_t bufsize) {
+size_t strlcpy(char *dst, const char *src, size_t bufsize) {
   size_t srclen = strlen(src);
   size_t result = srclen; /* Result is always the length of the src string */
   if(bufsize>0)
@@ -29,11 +29,7 @@ size_t strlcpy(char* dst, const char* src, size_t bufsize) {
   return result;
 }
 
-size_t strlcat(dst, src, siz)
-	char *dst;
-	const char *src;
-	size_t siz;
-{
+size_t strlcat(char *dst, const char *src, size_t siz) {
 	char *d = dst;
 	const char *s = src;
 	size_t n = siz;

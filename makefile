@@ -17,7 +17,7 @@ CFLAGS = -g3 -Wall -O0 -Wextra -pipe -std=c11 -Wpedantic -Wshadow -fms-extension
 CXFLAGS= $(shell pkg-config --cflags)
 
 CMAIN = main.c
-CLIBS = kputils.c bag.c
+CLIBS = kputils.c
 COBJS = $(CLIBS:.c=.o)
 PROGRAM = main
 
