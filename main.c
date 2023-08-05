@@ -121,7 +121,8 @@ int main(void) {
     struct node_t *iter = objects[HERO].bag->head;
     printf("You have the following items: ");
     while (iter != NULL) {
-        //printf("%s, ", (struct object_s*)(iter)->data->noun);
+        printf("%s, ", (char*)((struct object_s*)(iter->data))->noun);
+        iter = iter->next;
         
     }
     
