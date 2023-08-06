@@ -14,7 +14,7 @@ struct list_t {
     struct node_t *tail;
 };
 
-struct list_t* create_list();
+struct list_t* create_list(void);
 void push_head(struct list_t* list, void* data);
 void push_tail(struct list_t* list, void* data);
 void* pop_head(struct list_t *list);

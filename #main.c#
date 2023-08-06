@@ -157,9 +157,6 @@ int main(void) {
             int obj_id = (int)((struct object_s*)(iter->data))->object_id;
             int node_id = iter->node_id;
             printf("\n - Object %d, Node %d - ", obj_id, node_id);
-            //remove_by_id(objects[HERO].bag, node_id);
-            //push_head(objects[GRUMIO].bag , (void*)&objects[obj_id]);
-
             transfer_object(
                 objects[HERO].bag,
                 objects[GRUMIO].bag,
