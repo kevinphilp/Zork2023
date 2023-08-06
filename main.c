@@ -30,6 +30,16 @@ struct object_s {
     };
 };
 
+void dump_objects(struct object_s* in_objects, enum object_e start, enum object_e end) {
+    for (enum object_e counter=start; counter<end; counter++) {
+        printf("id: %d, %s is a %d",
+                in_objects[counter].object_id,
+                in_objects[counter].unique_name,
+                in_objects[counter].is_a);
+        puts("");
+    }
+}
+
 int main(void) {
 
     struct object_s *objects;
@@ -116,6 +126,8 @@ int main(void) {
 
     push_head(objects[HERO].bag, (void*)&objects[ROPE]);
     push_head(objects[HERO].bag, (void*)&objects[HELPNOTE]);
+
+    dump_objects(objects, HERO, END_OBJ);
 
     struct node_t *iter = objects[HERO].bag->head;
     printf("You have the following items: ");
