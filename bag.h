@@ -2,7 +2,7 @@
 #define BAG_H
 
 struct node_t {
-    int id;
+    int node_id;
     void* data;
     struct node_t *next;
     struct node_t *prev;
@@ -21,7 +21,7 @@ void* pop_head(struct list_t *list);
 void* pop_tail(struct list_t *list);
 void delete_list(struct list_t *list);
 void empty_list(struct list_t *list);
-void* get_by_id(struct list_t *list, int id);
-void* remove_by_id(struct list_t *list, int id);
+void* get_by_id(struct list_t *list, int node_id);
+void* remove_by_id(struct list_t *list, int node_id);
 
 #endif

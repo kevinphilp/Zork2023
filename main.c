@@ -12,7 +12,7 @@ enum type_e {ITEM, LOCATION, PERSON};
 enum object_e {HERO=0, GRUMIO, WOODENBOX, REDBALL, KNIFE, HELPNOTE, ROPE, END_OBJ};
 
 struct object_s {
-    enum object_e id;
+    enum object_e object_id;
     char noun[12], adjective[12], unique_name[24], description[256];
     struct list_t *bag;
     enum type_e is_a;
@@ -45,7 +45,7 @@ int main(void) {
     
 
     // HERO 0
-    objects[HERO].id = HERO;
+    objects[HERO].object_id = HERO;
     strlcpy(objects[HERO].noun, "me", 12); 
     strlcpy(objects[HERO].adjective, "brave", 12); 
     strlcpy(objects[HERO].unique_name, "hero", 12);
@@ -55,7 +55,7 @@ int main(void) {
     strlcpy(objects[HERO].person.name, "Freddy", 12);
 
     // GRUMIO 1
-    objects[GRUMIO].id = GRUMIO;
+    objects[GRUMIO].object_id = GRUMIO;
     strlcpy(objects[GRUMIO].noun, "grumio", 12); 
     strlcpy(objects[GRUMIO].adjective, "grumpy", 12); 
     strlcpy(objects[GRUMIO].unique_name, "grumio", 12);
@@ -65,7 +65,7 @@ int main(void) {
     strlcpy(objects[GRUMIO].person.name, "Grumio", 12);
 
     // WOODENBOX 2
-    objects[WOODENBOX].id = WOODENBOX;
+    objects[WOODENBOX].object_id = WOODENBOX;
     strlcpy(objects[WOODENBOX].noun, "box", 12); 
     strlcpy(objects[WOODENBOX].adjective, "wooden", 12); 
     strlcpy(objects[WOODENBOX].unique_name, "woodenbox", 12);
@@ -75,7 +75,7 @@ int main(void) {
     objects[WOODENBOX].item.capacity = 25;
 
     // REDBALL 3
-    objects[REDBALL].id = REDBALL;
+    objects[REDBALL].object_id = REDBALL;
     strlcpy(objects[REDBALL].noun, "ball", 12); 
     strlcpy(objects[REDBALL].adjective, "red", 12); 
     strlcpy(objects[REDBALL].unique_name, "redball", 12);
@@ -85,7 +85,7 @@ int main(void) {
     objects[REDBALL].item.capacity = 0;
 
     // KNIFE 4
-    objects[KNIFE].id = KNIFE;
+    objects[KNIFE].object_id = KNIFE;
     strlcpy(objects[KNIFE].noun, "knife", 12); 
     strlcpy(objects[KNIFE].adjective, "sharp", 12); 
     strlcpy(objects[KNIFE].unique_name, "knife", 12);
@@ -95,7 +95,7 @@ int main(void) {
     objects[KNIFE].item.capacity = 0;
 
     // HELPNOTE 5
-    objects[HELPNOTE].id = HELPNOTE;
+    objects[HELPNOTE].object_id = HELPNOTE;
     strlcpy(objects[HELPNOTE].noun, "note", 12); 
     strlcpy(objects[HELPNOTE].adjective, "help", 12); 
     strlcpy(objects[HELPNOTE].unique_name, "helpnote", 12);
@@ -105,7 +105,7 @@ int main(void) {
     objects[HELPNOTE].item.capacity = 0;
 
     // ROPE 6
-    objects[ROPE].id = ROPE;
+    objects[ROPE].object_id = ROPE;
     strlcpy(objects[ROPE].noun, "rope", 12); 
     strlcpy(objects[ROPE].adjective, "long", 12); 
     strlcpy(objects[ROPE].unique_name, "rope", 12);
@@ -131,10 +131,11 @@ int main(void) {
         if ( strcicmp(
                  (char*)((struct object_s*)(iter->data))->unique_name,
                  "rope") == 0 ) {
-            int id = (int)((struct object_s*)(iter->data))->id;
-            printf("\n - %d - ", id);
-            remove_by_id(objects[HERO].bag, id);
-            push_head(objects[GRUMIO].bag , (void*)&objects[id]);
+            int obj_id = (int)((struct object_s*)(iter->data))->object_id;
+            int node_id = iter->node_id;
+            printf("\n - Object %d, Node %d - ", obj_id, node_id);
+            remove_by_id(objects[HERO].bag, node_id);
+            push_head(objects[GRUMIO].bag , (void*)&objects[obj_id]);
             break;
         } else {
             iter = iter->next;

@@ -38,7 +38,7 @@ void push_head(struct list_t* list, void* data) {
         printf("Problem allocating node.");
         exit(0);
     }
-    new_node->id = node_id++;
+    new_node->node_id = node_id++;
     new_node->data = data;
     if (list->head == NULL) {  // List is empty
         list->head = new_node;
@@ -58,7 +58,7 @@ void push_tail(struct list_t* list, void* data) {
         printf("Problem allocating node.");  //Change to perror
         exit(0);
     }
-    new_node->id = node_id++;
+    new_node->node_id = node_id++;
     new_node->data = data;
     if (list->head == NULL) {   // List is empty
         list->head = new_node;
@@ -114,13 +114,13 @@ void* pop_tail(struct list_t *list) {
     return(ret_data);
 }
 
-void* remove_by_id(struct list_t *list, int id) {
+void* remove_by_id(struct list_t *list, int del_id) {
     if (list->size == 0) {  // Empty list
         return(NULL);
     } else {
         struct node_t *current_node = list->head;
         while (current_node != NULL) {
-            if (current_node->id == id) {  // List one node only
+            if (current_node->node_id == del_id) {  // List one node only
                 if (list->size == 1) {
                     list->head = NULL;
                     list->tail = NULL;
@@ -150,13 +150,13 @@ void* remove_by_id(struct list_t *list, int id) {
     }
 }
 
-void* get_by_id(struct list_t *list, int id) {
+void* get_by_id(struct list_t *list, int get_id) {
     if (list->size == 0) {  // Empty list
         return(NULL);
     } else {
         struct node_t *current_node = list->head;
         while (current_node != NULL) {
-            if (current_node->id == id) {
+            if (current_node->node_id == get_id) {
                 return(current_node->data);
             }
         }
