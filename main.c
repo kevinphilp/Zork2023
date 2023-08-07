@@ -9,7 +9,7 @@
 
 enum type_e {ITEM, LOCATION, PERSON};
 
-enum object_e {HERO=0, GRUMIO, WOODENBOX, REDBALL, KNIFE, HELPNOTE, ROPE, END_OBJ};
+enum object_e {HERO=0, GRUMIO, KITCHEN, WOODENBOX, REDBALL, KNIFE, HELPNOTE, ROPE, END_OBJ};
 
 struct object_s {
     enum object_e object_id;
@@ -21,7 +21,7 @@ struct object_s {
             int weight, capacity;
         } item;
         struct {
-            int location;
+            bool lit;
         } location;
         struct {
             bool can_carry;
@@ -30,24 +30,55 @@ struct object_s {
     };
 };
 
+// enum type_e {ITEM, LOCATION, PERSON};
 void dump_objects(struct object_s* in_objects, enum object_e start, enum object_e end) {
+    puts("People:");
     for (enum object_e counter=start; counter<end; counter++) {
-        printf("id: %d, %s is a %d",
-                in_objects[counter].object_id,
-                in_objects[counter].unique_name,
-                in_objects[counter].is_a);
-        puts("");
+        if (in_objects[counter].is_a == PERSON) {
+            printf("id: %d, %s is a %d",
+                   in_objects[counter].object_id,
+                   in_objects[counter].unique_name,
+                   in_objects[counter].is_a);
+            puts("");
+        }
     }
-}
+    puts("Locations:");
+    for (enum object_e counter=start; counter<end; counter++) {
+        if (in_objects[counter].is_a == LOCATION) {
+            printf("id: %d, %s is a %d\n",
+                   in_objects[counter].object_id,
+                   in_objects[counter].unique_name,
+                   in_objects[counter].is_a);
+            printf("Is lit: %s",
+                   in_objects[counter].location.lit ?
+                   "True" : "False");
+            puts("");
+        }
+    }
+    puts("Items:");
+    for (enum object_e counter=start; counter<end; counter++) {
+        if (in_objects[counter].is_a == ITEM) {
+            printf("id: %d, %s is a %d\n",
+                   in_objects[counter].object_id,
+                   in_objects[counter].unique_name,
+                   in_objects[counter].is_a);
+            printf("Weighs: %d, Capacity: %d\n",
+                   in_objects[counter].item.weight,
+                   in_objects[counter].item.capacity);
+            puts("");
+        }
+    }
+    }
 
 void transfer_object(
     struct list_t* remove_list,
     struct list_t* push_list,
     int node_id,
-    void *data
-    ) {   
+    struct object_s* object) {
+    push_head(push_list, object);
     remove_by_id(remove_list, node_id);
-    push_head(push_list , (void*)data);
+    // push_head(push_list , (void*)data);
+    // ((struct object_s*)(iter->data))
 }
 
 
@@ -85,6 +116,15 @@ int main(void) {
     objects[GRUMIO].person.can_carry = true;
     strlcpy(objects[GRUMIO].person.name, "Grumio", 12);
 
+    // KITCHEN 
+    objects[KITCHEN].object_id = KITCHEN;
+    strlcpy(objects[KITCHEN].noun, "kitchen", 12); 
+    strlcpy(objects[KITCHEN].adjective, "damp", 12); 
+    strlcpy(objects[KITCHEN].unique_name, "dampkitchen", 12);
+    strlcpy(objects[KITCHEN].description, "A damp kitchen.", 12); 
+    objects[KITCHEN].is_a = LOCATION;
+    objects[KITCHEN].location.lit = false;
+    
     // WOODENBOX 2
     objects[WOODENBOX].object_id = WOODENBOX;
     strlcpy(objects[WOODENBOX].noun, "box", 12); 
@@ -155,17 +195,13 @@ int main(void) {
                  (char*)((struct object_s*)(iter->data))->unique_name,
                  "rope") == 0 ) {
             int obj_id = (int)((struct object_s*)(iter->data))->object_id;
-            int node_id = iter->node_id;
-            printf("\n - Object %d, Node %d - ", obj_id, node_id);
-            //remove_by_id(objects[HERO].bag, node_id);
-            //push_head(objects[GRUMIO].bag , (void*)&objects[obj_id]);
-
-            transfer_object(
+            printf("\n - Object %d, Node %d - ", obj_id, iter->node_id);
+            transfer_object (
                 objects[HERO].bag,
                 objects[GRUMIO].bag,
-                node_id,
-                (void*)&objects[obj_id]);
-
+                iter->node_id,
+                (struct object_s*)(iter->data));
+            
             break;
         } else {
             iter = iter->next;
