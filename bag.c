@@ -15,6 +15,7 @@ static int node_id = 0;
   The size counter is set to zero.
   @note       Optionally add a note too.
   @param[in]  void
+  @param[out]  struct list_t*
   @return     List pointer
   - type struct *list_t
              - Some text
@@ -32,6 +33,14 @@ struct list_t* create_list(void) {
     return new_list;
 }
 
+/*! push_head:
+  @brief      Function adds data to a new node at head.
+  @details    Data attached as a void pointer to head and the size counter is incremented. If list is empty head and tail point to new node. If not empty new node next points to head and new node previous points to NULL. List head set to new node.
+  @note       Optionally add a note too.
+  @param[in]  struct list_t* list, void* data
+  @param[out]  void
+  @return     Nothing.
+*/
 void push_head(struct list_t* list, void* data) {
     struct node_t *new_node = malloc(sizeof(struct node_t));
     if (!new_node) {
@@ -189,3 +198,5 @@ void empty_list(struct list_t *list) {
         list->size = 0;
     }
 }
+
+
