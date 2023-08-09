@@ -84,26 +84,27 @@ void transfer_object(
     remove_by_id(remove_list, node_id);
 }
 
-int compare(void* target) {
-    if (*(int*)target == 0) {
+int compare(void *item1, void *item2) {
+    if (*(int*)item1 == *(int*)item2) {
         return 0;
-    } else if (*(int*)target == 1) {
+    } else if (*(int*)item1 > *(int*)item2) {
         return 1;
     } else {
         return -1;
     }
 }
 
-int find_element( int(*fn)(void *target) ) {
+int find_element( void *data, int(*fn)(void *a, void *b) ) {
     int ret = 1;
-    ret = fn(&ret);
+    ret = fn(data, &ret);
     return( ret );
 }
 
 int main(void) {
 
-    int p =1;
-    printf("- %d -\n", find_element( (compare((void*)&p) )));
+    int p = 1;
+    printf("- %d -\n", find_element( (void*)&p, compare ));
+
 
     return(0);
     
