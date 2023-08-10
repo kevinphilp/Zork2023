@@ -199,4 +199,18 @@ void empty_list(struct list_t *list) {
     }
 }
 
+int find_element( void *data, struct list_t *list, int(*fn)(void *a, void *b) ) {
+    if (list) {
+        struct node_t *current_node = list->head;
+        while (current_node != NULL) {
+            if (fn(data, current_node->data) == 0) {
+                printf("Found: %d", current_node->node_id);
+                return(current_node->node_id);
+            }
+        }
+    }
+    return(0);
+}
+
+
 

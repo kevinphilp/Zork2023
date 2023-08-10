@@ -94,19 +94,11 @@ int compare(void *item1, void *item2) {
     }
 }
 
-int find_element( void *data, int(*fn)(void *a, void *b) ) {
-    int ret = 1;
-    ret = fn(data, &ret);
-    return( ret );
-}
 
 int main(void) {
 
     int p = 1;
     printf("- %d -\n", find_element( (void*)&p, compare ));
-
-
-    return(0);
     
     struct object_s *objects;
     objects = malloc((END_OBJ+1) * sizeof(struct object_s));
