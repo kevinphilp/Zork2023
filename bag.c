@@ -204,11 +204,13 @@ int find_element( void *data, struct list_t *list, int(*fn)(void *a, void *b) ) 
         struct node_t *current_node = list->head;
         while (current_node != NULL) {
             if (fn(data, current_node->data) == 0) {
-                printf("Found: %d", current_node->node_id);
+                printf("\nFound_element: %d \n", current_node->node_id);
                 return(current_node->node_id);
             }
+            current_node = current_node->next;
         }
     }
+    puts("\n Not Found_element: %d \n");
     return(0);
 }
 

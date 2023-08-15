@@ -84,21 +84,20 @@ void transfer_object(
     remove_by_id(remove_list, node_id);
 }
 
-int compare(void *item1, void *item2) {
-    if (*(int*)item1 == *(int*)item2) {
-        return 0;
-    } else if (*(int*)item1 > *(int*)item2) {
-        return 1;
-    } else {
-        return -1;
-    }
+int compare_unique_name(void *item1, void *item2) {  
+    return( strcicmp(
+                ((struct object_s*)item2)->unique_name,
+                ((struct object_s*)item1)->unique_name
+                ));
 }
-
 
 int main(void) {
 
-    int p = 1;
-    printf("- %d -\n", find_element( (void*)&p, compare ));
+    //int p = 1;
+    //printf("- %d -\n", find_element( (void*)&p, compare ));
+
+
+
     
     struct object_s *objects;
     objects = malloc((END_OBJ+1) * sizeof(struct object_s));
@@ -184,6 +183,13 @@ int main(void) {
     push_head(objects[HERO].bag, (void*)&objects[ROPE]);
     push_head(objects[HERO].bag, (void*)&objects[HELPNOTE]);
     dump_objects(objects, HERO, END_OBJ);
+
+    printf("\n Compare - %d - \n", compare_unique_name( (void*)&objects[ROPE], (void*)&objects[HELPNOTE]));
+
+    printf("\n - Found - %d \n", find_element( (void*)&objects[ROPE], objects[HERO].bag, compare_unique_name ));
+
+    printf("\n - Found - %d \n", find_element( (void*)&objects[KNIFE], objects[HERO].bag, compare_unique_name ));
+    
     struct node_t *iter = objects[HERO].bag->head;
     printf("You have the following items: ");
     while (iter != NULL) {
