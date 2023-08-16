@@ -28,6 +28,7 @@ struct object_s {
         struct {
             bool can_carry;
             char name[12];
+            enum object_e location;
         } person;
     };
 };
@@ -93,12 +94,6 @@ int compare_unique_name(void *item1, void *item2) {
 
 int main(void) {
 
-    //int p = 1;
-    //printf("- %d -\n", find_element( (void*)&p, compare ));
-
-
-
-    
     struct object_s *objects;
     objects = malloc((END_OBJ+1) * sizeof(struct object_s));
     if (objects == NULL) {
@@ -108,6 +103,7 @@ int main(void) {
     for (enum object_e counter=HERO; counter <= END_OBJ; counter++) {
         objects[counter].bag = create_list();
     }
+    
     // HERO 0
     objects[HERO].object_id = HERO;
     strlcpy(objects[HERO].noun, "me", 12);
@@ -115,6 +111,7 @@ int main(void) {
     strlcpy(objects[HERO].unique_name, "hero", 12);
     strlcpy(objects[HERO].description, "A brave young man.", 12);
     objects[HERO].is_a = PERSON;
+    objects[HERO].person.location = KITCHEN;
     objects[HERO].person.can_carry = true;
     strlcpy(objects[HERO].person.name, "Freddy", 12);
     // GRUMIO 1
@@ -124,9 +121,10 @@ int main(void) {
     strlcpy(objects[GRUMIO].unique_name, "grumio", 12);
     strlcpy(objects[GRUMIO].description, "A grumpy slave.", 12);
     objects[GRUMIO].is_a = PERSON;
+    objects[HERO].person.location = KITCHEN;
     objects[GRUMIO].person.can_carry = true;
     strlcpy(objects[GRUMIO].person.name, "Grumio", 12);
-    // KITCHEN 
+    // KITCHEN 2
     objects[KITCHEN].object_id = KITCHEN;
     strlcpy(objects[KITCHEN].noun, "kitchen", 12);
     strlcpy(objects[KITCHEN].adjective, "damp", 12);
@@ -134,7 +132,7 @@ int main(void) {
     strlcpy(objects[KITCHEN].description, "A damp kitchen.", 12);
     objects[KITCHEN].is_a = LOCATION;
     objects[KITCHEN].location.lit = false;
-    // WOODENBOX 2
+    // WOODENBOX 3
     objects[WOODENBOX].object_id = WOODENBOX;
     strlcpy(objects[WOODENBOX].noun, "box", 12);
     strlcpy(objects[WOODENBOX].adjective, "wooden", 12);
@@ -144,7 +142,7 @@ int main(void) {
     objects[WOODENBOX].is_a = ITEM;
     objects[WOODENBOX].item.weight = 5;
     objects[WOODENBOX].item.capacity = 25;
-    // REDBALL 3
+    // REDBALL 4
     objects[REDBALL].object_id = REDBALL;
     strlcpy(objects[REDBALL].noun, "ball", 12);
     strlcpy(objects[REDBALL].adjective, "red", 12);
@@ -153,7 +151,7 @@ int main(void) {
     objects[REDBALL].is_a = ITEM;
     objects[REDBALL].item.weight = 2;
     objects[REDBALL].item.capacity = 0;
-    // KNIFE 4
+    // KNIFE 5
     objects[KNIFE].object_id = KNIFE;
     strlcpy(objects[KNIFE].noun, "knife", 12);
     strlcpy(objects[KNIFE].adjective, "sharp", 12);
@@ -162,7 +160,7 @@ int main(void) {
     objects[KNIFE].is_a = ITEM;
     objects[KNIFE].item.weight = 2;
     objects[KNIFE].item.capacity = 0;
-    // HELPNOTE 5
+    // HELPNOTE 6
     objects[HELPNOTE].object_id = HELPNOTE;
     strlcpy(objects[HELPNOTE].noun, "note", 12);
     strlcpy(objects[HELPNOTE].adjective, "help", 12);
@@ -171,7 +169,7 @@ int main(void) {
     objects[HELPNOTE].is_a = ITEM;
     objects[HELPNOTE].item.weight = 1;
     objects[HELPNOTE].item.capacity = 0;
-    // ROPE 6
+    // ROPE 7
     objects[ROPE].object_id = ROPE;
     strlcpy(objects[ROPE].noun, "rope", 12);
     strlcpy(objects[ROPE].adjective, "long", 12);
@@ -182,14 +180,20 @@ int main(void) {
     objects[ROPE].item.capacity = 0;
     push_head(objects[HERO].bag, (void*)&objects[ROPE]);
     push_head(objects[HERO].bag, (void*)&objects[HELPNOTE]);
-    dump_objects(objects, HERO, END_OBJ);
 
-    printf("\n Compare - %d - \n", compare_unique_name( (void*)&objects[ROPE], (void*)&objects[HELPNOTE]));
+    // dump_objects(objects, HERO, END_OBJ);
 
-    printf("\n - Found - %d \n", find_element( (void*)&objects[ROPE], objects[HERO].bag, compare_unique_name ));
 
-    printf("\n - Found - %d \n", find_element( (void*)&objects[KNIFE], objects[HERO].bag, compare_unique_name ));
-    
+    struct object_s *found_node = NULL;
+
+    found_node = find_element( (void*)&objects[ROPE], objects[HERO].bag, compare_unique_name );
+
+    if (found_node != NULL) {
+        printf("\n - Found on Hero - %s \n", found_node->unique_name);
+    } else {
+        printf("\n - Not found on Hero - \n");
+    }
+
     struct node_t *iter = objects[HERO].bag->head;
     printf("You have the following items: ");
     while (iter != NULL) {

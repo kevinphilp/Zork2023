@@ -23,6 +23,6 @@ void delete_list(struct list_t *list);
 void empty_list(struct list_t *list);
 void* get_by_id(struct list_t *list, int node_id);
 void* remove_by_id(struct list_t *list, int node_id);
-int find_element( void *data, struct list_t *list, int(*fn)(void *a, void *b) );
+void* find_element( void *data, struct list_t *list, int(*fn)(void *a, void *b) );
 
 #endif

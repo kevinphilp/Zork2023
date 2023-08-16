@@ -199,19 +199,26 @@ void empty_list(struct list_t *list) {
     }
 }
 
-int find_element( void *data, struct list_t *list, int(*fn)(void *a, void *b) ) {
+/*! find_element:
+  @brief      Function to search a linked list usng a custom match function.
+  @details    Function accepts void pointers to data blocks.
+  @note       Optionally add a note too.
+  @param[in]  void *data, struct list_t *list, int(*fn)(void *a, void *b)
+  @param[out]
+  @return     void* - to data block or to NULL if not found.
+*/
+
+void* find_element( void *data, struct list_t *list, int(*fn)(void *a, void *b) ) {
     if (list) {
         struct node_t *current_node = list->head;
         while (current_node != NULL) {
             if (fn(data, current_node->data) == 0) {
-                printf("\nFound_element: %d \n", current_node->node_id);
-                return(current_node->node_id);
+                return(current_node->data);
             }
             current_node = current_node->next;
         }
     }
-    puts("\n Not Found_element: %d \n");
-    return(0);
+    return(NULL);
 }
 
 
