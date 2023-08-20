@@ -1,4 +1,4 @@
-/*! Main file for Bag, editing master, testing magit **/
+/*!  Main file for Bag, editing master, testing magit **/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -184,9 +184,7 @@ int main(void) {
     // dump_objects(objects, HERO, END_OBJ);
 
 
-    struct object_s *found_node = NULL;
-
-    found_node = find_element( (void*)&objects[ROPE], objects[HERO].bag, compare_unique_name );
+    struct object_s *found_node = find_element( (void*)&objects[ROPE], objects[HERO].bag, compare_unique_name );
 
     if (found_node != NULL) {
         printf("\n - Found on Hero - %s \n", found_node->unique_name);

@@ -13,8 +13,8 @@ TCC = tcc
 
 # -g3 emits macro info, don't use ggdb anymore
 CFLAGS = -g3 -Wall -O0 -Wextra -pipe -std=c11 -Wpedantic -Wshadow -fms-extensions
-# CXFLAGS= $(shell pkg-config --cflags --libs glib-2.0)
-CXFLAGS= $(shell pkg-config --cflags)
+# CXFLAGS= $(shell pkg-config --cflags --libs glib-2.0) 
+# CXFLAGS= $(shell pkg-config --cflags)
 
 CMAIN = main.c
 CLIBS = kputils.c bag.c
