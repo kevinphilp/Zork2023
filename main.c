@@ -85,7 +85,7 @@ void transfer_object(
     remove_by_id(remove_list, node_id);
 }
 
-int compare_unique_name(void *item1, void *item2) {  
+int compare_unique_name(void *item1, void *item2) {
     return( strcicmp(
                 ((struct object_s*)item2)->unique_name,
                 ((struct object_s*)item1)->unique_name
@@ -93,7 +93,6 @@ int compare_unique_name(void *item1, void *item2) {
 }
 
 int main(void) {
-
     struct object_s *objects;
     objects = malloc((END_OBJ+1) * sizeof(struct object_s));
     if (objects == NULL) {
@@ -103,42 +102,37 @@ int main(void) {
     for (enum object_e counter=HERO; counter <= END_OBJ; counter++) {
         objects[counter].bag = create_list();
     }
-    
+
     // HERO 0
     objects[HERO].object_id = HERO;
     strlcpy(objects[HERO].noun, "me", 12);
     strlcpy(objects[HERO].adjective, "brave", 12);
     strlcpy(objects[HERO].unique_name, "hero", 12);
     strlcpy(objects[HERO].description, "A brave young man.", 12);
-    objects[HERO].is_a = PERSON;
-    objects[HERO].person.location = KITCHEN;
+    objects[HERO].is_a = PERSON; objects[HERO].person.location = KITCHEN;
     objects[HERO].person.can_carry = true;
     strlcpy(objects[HERO].person.name, "Freddy", 12);
     // GRUMIO 1
-    objects[GRUMIO].object_id = GRUMIO;
-    strlcpy(objects[GRUMIO].noun, "grumio", 12);
+    objects[GRUMIO].object_id = GRUMIO; strlcpy(objects[GRUMIO].noun, "grumio", 12);
     strlcpy(objects[GRUMIO].adjective, "grumpy", 12);
     strlcpy(objects[GRUMIO].unique_name, "grumio", 12);
     strlcpy(objects[GRUMIO].description, "A grumpy slave.", 12);
-    objects[GRUMIO].is_a = PERSON;
-    objects[HERO].person.location = KITCHEN;
+    objects[GRUMIO].is_a = PERSON; objects[HERO].person.location = KITCHEN;
     objects[GRUMIO].person.can_carry = true;
     strlcpy(objects[GRUMIO].person.name, "Grumio", 12);
     // KITCHEN 2
     objects[KITCHEN].object_id = KITCHEN;
-    strlcpy(objects[KITCHEN].noun, "kitchen", 12);
+    strlcpy(objects[KITCHEN].noun,"kitchen", 12);
     strlcpy(objects[KITCHEN].adjective, "damp", 12);
     strlcpy(objects[KITCHEN].unique_name, "dampkitchen", 12);
     strlcpy(objects[KITCHEN].description, "A damp kitchen.", 12);
-    objects[KITCHEN].is_a = LOCATION;
-    objects[KITCHEN].location.lit = false;
+    objects[KITCHEN].is_a = LOCATION; objects[KITCHEN].location.lit = false;
     // WOODENBOX 3
     objects[WOODENBOX].object_id = WOODENBOX;
     strlcpy(objects[WOODENBOX].noun, "box", 12);
     strlcpy(objects[WOODENBOX].adjective, "wooden", 12);
     strlcpy(objects[WOODENBOX].unique_name, "woodenbox", 12);
-    strlcpy(objects[WOODENBOX].description,
-            "I can put something in here.", 256);
+    strlcpy(objects[WOODENBOX].description, "I can put something in here.", 256);
     objects[WOODENBOX].is_a = ITEM;
     objects[WOODENBOX].item.weight = 5;
     objects[WOODENBOX].item.capacity = 25;
@@ -166,8 +160,7 @@ int main(void) {
     strlcpy(objects[HELPNOTE].adjective, "help", 12);
     strlcpy(objects[HELPNOTE].unique_name, "helpnote", 12);
     strlcpy(objects[HELPNOTE].description, "Q is quit.", 256);
-    objects[HELPNOTE].is_a = ITEM;
-    objects[HELPNOTE].item.weight = 1;
+    objects[HELPNOTE].is_a = ITEM; objects[HELPNOTE].item.weight = 1;
     objects[HELPNOTE].item.capacity = 0;
     // ROPE 7
     objects[ROPE].object_id = ROPE;
@@ -175,13 +168,12 @@ int main(void) {
     strlcpy(objects[ROPE].adjective, "long", 12);
     strlcpy(objects[ROPE].unique_name, "rope", 12);
     strlcpy(objects[ROPE].description, "Useful for climbing.", 256);
-    objects[ROPE].is_a = ITEM;
-    objects[ROPE].item.weight = 4;
-    objects[ROPE].item.capacity = 0;
-    push_head(objects[HERO].bag, (void*)&objects[ROPE]);
-    push_head(objects[HERO].bag, (void*)&objects[HELPNOTE]);
+    objects[ROPE].is_a = ITEM; objects[ROPE].item.weight = 4;
+    objects[ROPE].item.capacity = 0; push_head(objects[HERO].bag,
+    (void*)&objects[ROPE]); push_head(objects[HERO].bag,
+    (void*)&objects[HELPNOTE]);
 
-    // dump_objects(objects, HERO, END_OBJ);
+    dump_objects(objects, HERO, END_OBJ);
 
 
     struct object_s *found_node = find_element( (void*)&objects[ROPE], objects[HERO].bag, compare_unique_name );
